@@ -14,6 +14,7 @@ use App\Http\Controllers\staffController;
 use App\Http\Controllers\staffdocController;
 use App\Http\Controllers\staticController;
 use App\Http\Controllers\userController;
+use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware'=>'islogin'],function(){
     //BRANDS 
@@ -25,7 +26,6 @@ Route::group(['middleware'=>'islogin'],function(){
     Route::get('brandedit/{id}',[brandcontroller::class,'edit'])->name('edit');
     Route::post('brandupdate',[brandcontroller::class,'update'])->name('update');
     Route::post('/search',[brandcontroller::class,'search'])->name('search'); // select
-
     //----------------------------------------CLIENTS--------------------------------------------------//
 
     Route::post('/clients',[clientController::class,'insert'])->name('clinsert'); //insert 
@@ -124,17 +124,23 @@ Route::get('/login', function(){
 
 //----------------------------REGISTER--------------------------------------------//
 
-    Route::post('/qeydiyyat',[userController::class,'register'])->name('register');
+Route::post('/qeydiyyat',[userController::class,'register'])->name('register');
 
-    Route::get('/qeydiyyat', function(){
-        return view('register');
-    })->name('qeydiyyat');
+Route::get('/test',[userController::class,'test'])->name('test');
+Route::get('/user-verification/{verification}',[userController::class,'user_verification'])->name('user_verification');
 
-    Route::get('google',function(){
-        return view('googleAuth');
-        });
 
-    Route::get('auth/google', [GoogleLogin::class,'redirectToGoogle']);
 
-    Route::get('auth/google/callback', [GoogleLogin::class,'handleGoogleCallback']);
+Route::get('/qeydiyyat', function(){
+    return view('register');
+})->name('qeydiyyat');
+
+
+Route::get('google',function(){
+    return view('googleAuth');
+    });
+
+Route::get('auth/google', [GoogleLogin::class,'redirectToGoogle']);
+
+Route::get('auth/google/callback', [GoogleLogin::class,'handleGoogleCallback']);
 });

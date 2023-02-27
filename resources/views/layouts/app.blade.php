@@ -28,15 +28,15 @@ return redirect()->route('daxilol')->with('error','Siz bloklandiniz');
 
     <title>ANBAR </title>
     <!-- Custom CSS -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<link  href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="{{url('assets/extra-libs/c3/c3.min.css')}}" rel="stylesheet">
-    <link href="{{url('assets/libs/chartist/dist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{url('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css')}}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{url('dist/css/style.min.css')}}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-   
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
    <link rel="stylesheet" type="text/css" 
     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -274,8 +274,8 @@ return redirect()->route('daxilol')->with('error','Siz bloklandiniz');
     <!--This page JavaScript -->
     <script src="{{url('assets/extra-libs/c3/d3.min.js')}}"></script>
     <script src="{{url('assets/extra-libs/c3/c3.min.js')}}"></script>
-    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="{{url('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}"></script>
+    <script src="{{url('assets/libs/chartist/dist/chartist.min.js')}}"></script>
+    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="{{url('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js')}}"></script>
     <script src="{{url('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js')}}"></script>
     <script src="{{url('dist/js/pages/dashboards/dashboard1.min.js')}}"></script>

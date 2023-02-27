@@ -39,7 +39,8 @@ class GoogleLogin extends Controller
       
                 return redirect()->intended('static');
        
-            }else{
+            }
+            else{
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,

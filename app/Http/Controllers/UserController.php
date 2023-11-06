@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Termwind\Components\Dd;
 
-class userController extends Controller
+class UserController extends Controller
 {
     
     public function register(userRequest $post){

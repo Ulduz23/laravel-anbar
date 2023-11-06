@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('blok')->nullable();
-            $table->string('foto')->nullable();
             $table->string('name');
             $table->string('surname')->nullable();
             $table->string('telefon')->nullable();
             $table->string('email')->unique();
+            $table->string('foto')->nullable();
+            $table->string('blok')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->string('google_id')->nullable();
         });
     }
 

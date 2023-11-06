@@ -1,15 +1,3 @@
-<?php
-
-use App\Models\User;
-$yoxla = User::where('id','=',Auth::id())->where('status','=',1)->count();
-
-if($yoxla > 0){
-    auth()->logout();
-    return redirect()->route('daxilol')->with('error','Siz bloklandiniz');
-}
-
-?>
-
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -212,22 +200,8 @@ if($yoxla > 0){
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-
-       <!-- Container fluid  -->
-            <!-- ============================================================== -->
             <div class="container-fluid">
-                <!-- *************************************************************** -->
-                
-                <!-- *************************************************************** -->
 
         @yield('brands')
         @yield('clients')
@@ -242,22 +216,14 @@ if($yoxla > 0){
 
 
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
 </div>
 
 
 
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{{url('assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    {{-- <script src="{{url('assets/libs/jquery/dist/jquery.min.js')}}"></script> --}}
     <script src="{{url('assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{url('assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- apps -->
@@ -272,7 +238,7 @@ if($yoxla > 0){
     <script src="{{url('assets/extra-libs/c3/d3.min.js')}}"></script>
     <script src="{{url('assets/extra-libs/c3/c3.min.js')}}"></script>
     <script src="{{url('assets/libs/chartist/dist/chartist.min.js')}}"></script>
-    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    {{-- <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script> --}}
     <script src="{{url('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js')}}"></script>
     <script src="{{url('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js')}}"></script>
     <script src="{{url('dist/js/pages/dashboards/dashboard1.min.js')}}"></script>

@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Brands extends Model
 {
     use HasFactory;
-    protected $fillable =['foto', 'brand'];
+    protected $fillable =['foto', 'brand','user_id'];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

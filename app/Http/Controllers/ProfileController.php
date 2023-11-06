@@ -70,8 +70,11 @@ class ProfileController extends Controller
      
     public function delete(Request $post)
     {
-        
-       User::find(Auth::id())->delete(); //where('id', '=' , $id)
+        $user = User::find(Auth::id());
+
+        $user->brands()->delete();
+        $user->delete();
+
        
        return redirect()->route('login')->with('success','Profiliniz silindi');
        

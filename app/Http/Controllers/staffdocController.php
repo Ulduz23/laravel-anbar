@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\staffRequest;
 use App\Http\Requests\staffdocRequest;
-use App\Models\staff;
-use App\Models\staffdoc;
+use App\Models\Staff;
+use App\Models\Staffdoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class staffdocController extends Controller
+class StaffdocController extends Controller
 {
     
     public function insert(staffdocRequest $post)
     {
-        $con = new staffdoc();
+        $con = new Staffdoc();
 
         $post->validate([
             'scan' => 'required|image|mimes:jpg,png,jpeg,gij,svg|max:2048',
@@ -45,13 +45,13 @@ class staffdocController extends Controller
 
 public function select($id){
     
-    $data = staffdoc::join('staff','staff.id','=','staffdocs.staf_id')      
+    $data = Staffdoc::join('staff','staff.id','=','staffdocs.staf_id')      
     ->where('staffdocs.user_id','=',Auth::id())
     ->where('staffdocs.staf_id','=',$id)
     ->orderBy('staffdocs.id','desc')
     ->get();
 
-    $sdata=staff::where('user_id','=',Auth::id())->get();
+    $sdata= Staff::where('user_id','=',Auth::id())->get();
 
     return view('staffdoc',[
         'list'=>$data,
@@ -64,12 +64,12 @@ public function select($id){
 
 public function sil($id){
 
-    $sildata = staffdoc::find($id); 
-    $data = staffdoc::orderBy('id','desc')
+    $sildata = Staffdoc::find($id); 
+    $data = Staffdoc::orderBy('id','desc')
     ->where('user_id','=',Auth::id())
     ->get();
     
-    $sdata=staff::where('user_id','=',Auth::id())->get();
+    $sdata= Staff::where('user_id','=',Auth::id())->get();
 
     return view('staffdoc',[
         'list'=>$data,
@@ -84,19 +84,19 @@ public function sil($id){
 
 public function delete($id)
 {  
-   $sil = staffdoc::find($id)->delete(); 
+   $sil = Staffdoc::find($id)->delete(); 
    
    return back()->with('success','Document silindi');
    
 }
 
 public function edit($id){
-    $editdata = staffdoc::find($id); 
-    $data = staffdoc::orderBy('staffdocs.id','desc')        
+    $editdata = Staffdoc::find($id); 
+    $data = Staffdoc::orderBy('staffdocs.id','desc')        
     ->where('user_id','=',Auth::id())
     ->get();
 
-    $sdata=staff::where('user_id','=',Auth::id())->get();
+    $sdata= Staff::where('user_id','=',Auth::id())->get();
 
 
     return view('staffdoc',[
@@ -111,7 +111,7 @@ public function edit($id){
 public function update(staffdocRequest $post)
     {
     
-        $con = staffdoc::find($post->id);
+        $con = Staffdoc::find($post->id);
 
         if($post->file('scan')){
         

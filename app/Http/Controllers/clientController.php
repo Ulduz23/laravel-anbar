@@ -10,7 +10,7 @@ use App\Models\clients;
 use Illuminate\Support\Facades\Auth;
 
 
-class clientController extends Controller
+class ClientController extends Controller
 {
     public function insert(crequest $post)
     {

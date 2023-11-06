@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\orequest;
 use Illuminate\Http\Request;
-use App\Models\product;
-use App\Models\brands;
-use App\Models\clients;
-use App\Models\orders;
+use App\Models\Product;
+use App\Models\Brands;
+use App\Models\Clients;
+use App\Models\Orders;
 use Illuminate\Support\Facades\Auth;
 
-class staticController extends Controller
+class StaticController extends Controller
 {
 
     public function hesab()
     {
-        $data = orders::join('clients','clients.id','=','orders.client_id') 
+        $data = Orders::join('clients','clients.id','=','orders.client_id') 
         ->join('products','products.id','=','orders.product_id')
         ->join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','clients.client','clients.soyad','products.miqdar','products.mehsul','products.alish','products.satish','orders.created_at','orders.id','orders.sifarish','orders.tesdiq')
@@ -24,17 +24,17 @@ class staticController extends Controller
         ->get();
 
 
-        $pdata = product::where('products.user_id','=',Auth::id())->get();
+        $pdata = Product::where('products.user_id','=',Auth::id())->get();
 
 
-        $stat = product::join('brands','brands.id','=','products.brand_id')
+        $stat = Product::join('brands','brands.id','=','products.brand_id')
         ->select('products.miqdar','products.alish','products.satish')
         ->where('products.user_id','=',Auth::id())
         ->orderBy('products.id','desc')->get();
 
-        $bdata = brands::where('brands.user_id','=',Auth::id())->get();
-        $cdata = clients::where('clients.user_id','=',Auth::id())->get();
-        $odata = orders::where('orders.user_id','=',Auth::id())->get();
+        $bdata = Brands::where('brands.user_id','=',Auth::id())->get();
+        $cdata = Clients::where('clients.user_id','=',Auth::id())->get();
+        $odata = Orders::where('orders.user_id','=',Auth::id())->get();
 
 
         $tqazanc = 0;

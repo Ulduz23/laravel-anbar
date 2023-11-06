@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
  
 use App\Http\Requests\prequest;
-use App\Models\product;
-use App\Models\clients;
+use App\Models\Product;
+use App\Models\Clients;
 
-use App\Models\orders;
-use App\Models\brands;
+use App\Models\Orders;
+use App\Models\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class productController extends Controller
+class ProductController extends Controller
 {
     public function insert(prequest $post)
     {
-        $con = new product();
+        $con = new Product();
 
         if($post->file('foto'))
         
@@ -43,13 +43,13 @@ class productController extends Controller
     
     public function select()
     {
-        $data = product::join('brands','brands.id','=','products.brand_id')
+        $data = Product::join('brands','brands.id','=','products.brand_id')
         ->select('products.mehsul','brands.brand','products.alish','products.satish','products.miqdar','products.foto','products.brand_id','products.created_at','products.id')
         ->where('products.user_id','=',Auth::id())
         ->orderBy('products.id','desc')
         ->get();
 
-        $bdata = brands::get();
+        $bdata = Brands::get();
 
 
         return view('products',[
@@ -62,7 +62,7 @@ class productController extends Controller
     public function sil($id)
     {
         
-       $sildata = product::find($id); //where('id', '=' , $id)
+       $sildata = Product::find($id); //where('id', '=' , $id)
        
        $data = product::join('brands','brands.id','=','products.brand_id')
         ->select('products.mehsul','brands.brand','products.alish','products.satish','products.miqdar','products.foto','products.brand_id','products.created_at','products.id')
@@ -70,7 +70,7 @@ class productController extends Controller
         ->orderBy('products.id','desc')
         ->get();
 
-        $bdata = brands::get();
+        $bdata = Brands::get();
 
 
         return view('products',[
@@ -85,7 +85,7 @@ class productController extends Controller
     public function delete($id)
     {
         
-       $sil = product::find($id)->delete(); //where('id', '=' , $id)
+       $sil = Product::find($id)->delete(); //where('id', '=' , $id)
        
        return redirect()->route('pselect')->with('success','Məhsul silindi');
        
@@ -95,15 +95,15 @@ class productController extends Controller
     public function edit($id)
     {
         
-       $editdata = product::find($id); //where('id', '=' , $id)
+       $editdata = Product::find($id); //where('id', '=' , $id)
        
-       $data = product::join('brands','brands.id','=','products.brand_id')
+       $data = Product::join('brands','brands.id','=','products.brand_id')
         ->select('products.mehsul','brands.brand','products.alish','products.satish','products.miqdar','products.foto','products.brand_id','products.created_at','products.id')
         ->where('products.user_id','=',Auth::id())
         ->orderBy('products.id','desc')
         ->get();
 
-        $bdata = brands::get();
+        $bdata = Brands::get();
 
 
         return view('products',[
@@ -120,7 +120,7 @@ class productController extends Controller
     {
         
 
-        $con = product::find($post->id);
+        $con = Product::find($post->id);
 
         if($post->file('foto')){
         
@@ -151,7 +151,7 @@ class productController extends Controller
     public function search(Request $post){
         if($post->ajax()){
 
-        $list = product::join('brands','brands.id','=','products.brand_id')
+        $list = Product::join('brands','brands.id','=','products.brand_id')
         ->select('products.mehsul','brands.brand','products.alish','products.satish','products.miqdar','products.foto','products.brand_id','products.created_at','products.id')
         ->orWhere('mehsul','LIKE','%'.$post->search.'%')
         ->orWhere('brand','LIKE','%'.$post->search.'%')

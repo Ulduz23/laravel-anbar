@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\brequest;
-use App\Models\brands;
-use App\Models\clients;
-use App\Models\orders;
-use App\Models\product;
+use App\Models\Brands;
+use App\Models\Clients;
+use App\Models\Orders;
+use App\Models\Product;
 
 use Illuminate\Support\Facades\Auth;
 
 
   
-class brandcontroller extends Controller
+class BrandController extends Controller
 {
     public function insert(brequest $post)
     {
-        $con = new brands();
+        $con = new Brands();
 
         
-        $yoxla = brands::where('brand','=', $post->brand)->count();
+        $yoxla = Brands::where('brand','=', $post->brand)->count();
 
         if($yoxla==0)
         {
@@ -48,7 +48,7 @@ class brandcontroller extends Controller
      
     public function select()
     {
-        $data = brands::get()->where('user_id','=',Auth::id());
+        $data = Brands::get()->where('user_id','=',Auth::id());
 
         return view('brands',[
             'list'=>$data
@@ -59,10 +59,10 @@ class brandcontroller extends Controller
     public function sil($id)
     {
         
-       $sildata = brands::find($id); //where('id', '=' , $id)
+       $sildata = Brands::find($id); //where('id', '=' , $id)
        
        
-        $data = brands::get()        
+        $data = Brands::get()        
         ->where('user_id','=',Auth::id());
 
         return view('brands',[
@@ -77,7 +77,7 @@ class brandcontroller extends Controller
     public function delete($id)
     {
         
-       $sil = brands::find($id)->delete(); //where('id', '=' , $id)
+       $sil = Brands::find($id)->delete(); //where('id', '=' , $id)
        
        return redirect()->route('select')->with('success','Brend silindi');
        
@@ -86,9 +86,9 @@ class brandcontroller extends Controller
     public function edit($id)
     {
         
-       $editdata = brands::find($id); //where('id', '=' , $id)
+       $editdata = Brands::find($id); //where('id', '=' , $id)
        
-       $data = brands::get()        
+       $data = Brands::get()        
         ->where('user_id','=',Auth::id());
 
 
@@ -104,7 +104,7 @@ class brandcontroller extends Controller
     public function update(brequest $post)
     {
     
-        $con = brands::find($post->id);
+        $con = Brands::find($post->id);
 
         if($post->file('foto')){
         
@@ -130,7 +130,7 @@ class brandcontroller extends Controller
 public function search(Request $post){
         if($post->ajax()){
 
-        $list = brands::where('brand','LIKE','%'.$post->search.'%')->get();
+        $list = Brands::where('brand','LIKE','%'.$post->search.'%')->get();
         $output = "";  
         
         foreach ($list as $i=>$info) {

@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
  
 use App\Http\Requests\orequest;
 use Illuminate\Http\Request;
-use App\Models\product;
-use App\Models\brands;
-use App\Models\clients;
-use App\Models\orders;
+use App\Models\Product;
+use App\Models\Brands;
+use App\Models\Clients;
+use App\Models\Orders;
 use Illuminate\Support\Facades\Auth;
 
 
-class ordersController extends Controller
+class OrdersController extends Controller
 {
 
     public function insert(orequest $post)
     {
-        $con = new orders();
+        $con = new Orders();
 
         $con->product_id = $post->product_id;
         $con->client_id = $post->client_id;
@@ -34,7 +34,7 @@ class ordersController extends Controller
       
     public function select(){
     
-        $data = orders::join('clients','clients.id','=','orders.client_id') 
+        $data = Orders::join('clients','clients.id','=','orders.client_id') 
         ->join('products','products.id','=','orders.product_id')
         ->join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','clients.client','clients.soyad','products.miqdar','products.mehsul','products.alish','products.satish','orders.created_at','orders.id','orders.sifarish','orders.tesdiq')
@@ -42,10 +42,10 @@ class ordersController extends Controller
         ->orderBy('orders.id','desc')
         ->get();
 
-        $bdata = brands::get();
-        $cdata = clients::get();
+        $bdata = Brands::get();
+        $cdata = Clients::get();
 
-        $pdata = product::join('brands','brands.id','=','products.brand_id')
+        $pdata = Product::join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','products.id','products.miqdar','products.mehsul','products.alish','products.satish')
         ->orderBy('products.id','desc')->get();
 
@@ -62,19 +62,19 @@ class ordersController extends Controller
     public function sil($id)
     {
         
-       $sildata = orders::find($id); //where('id', '=' , $id)
+       $sildata = Orders::find($id); //where('id', '=' , $id)
        
        
-       $data = orders::join('clients','clients.id','=','orders.client_id') 
+       $data = Orders::join('clients','clients.id','=','orders.client_id') 
         ->join('products','products.id','=','orders.product_id')
         ->join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','clients.client','clients.soyad','products.miqdar','products.mehsul','products.alish','products.satish','orders.created_at','orders.id','orders.sifarish','orders.tesdiq')
         ->orderBy('orders.id','desc')
         ->get();
 
-        $bdata = brands::get();
-        $cdata = clients::get();
-        $pdata = product::get();
+        $bdata = Brands::get();
+        $cdata = Clients::get();
+        $pdata = Product::get();
 
 
         return view('orders',[
@@ -91,7 +91,7 @@ class ordersController extends Controller
     public function delete($id)
     {
         
-       $sil = orders::find($id)->delete(); //where('id', '=' , $id)
+       $sil = Orders::find($id)->delete(); //where('id', '=' , $id)
        
        return redirect()->route('orselect')->with('success','Sifariş silindi');
        
@@ -100,9 +100,9 @@ class ordersController extends Controller
     
     public function edit($id){
 
-        $editdata = orders::find($id);
+        $editdata = Orders::find($id);
 
-        $data = orders::join('clients','clients.id','=','orders.client_id') 
+        $data = Orders::join('clients','clients.id','=','orders.client_id') 
         ->join('products','products.id','=','orders.product_id')
         ->join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','clients.client','clients.soyad','products.miqdar','products.mehsul','products.alish','products.satish','orders.created_at','orders.id','orders.sifarish','orders.tesdiq')
@@ -110,11 +110,11 @@ class ordersController extends Controller
         ->orderBy('orders.id','desc')
         ->get();
 
-        $bdata = brands::get();
-        $cdata = clients::get();
-        $pdata = product::get();
+        $bdata = Brands::get();
+        $cdata = Clients::get();
+        $pdata = Product::get();
     
-        $pdata = product::join('brands','brands.id','=','products.brand_id')
+        $pdata = Product::join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','products.id','products.miqdar','products.mehsul','products.alish','products.satish')
         ->orderBy('products.id','desc')->get();
 
@@ -132,7 +132,7 @@ class ordersController extends Controller
 
     public function update(orequest $post){
 
-        $con = orders::find($post->id);
+        $con = Orders::find($post->id);
        
         $con->client_id = $post->client_id;
         $con->product_id = $post->product_id;
@@ -146,9 +146,9 @@ class ordersController extends Controller
 
     public function tesdiq($id){
 
-        $orders = orders::find($id);      
+        $orders = Orders::find($id);      
         $omiq = $orders->sifarish;  
-        $products = product::find($orders->product_id);   
+        $products = Product::find($orders->product_id);   
         $pmiq = $products->miqdar;
 
         if($omiq < $pmiq){
@@ -172,9 +172,9 @@ class ordersController extends Controller
     
     public function legv($id){
         
-        $orders = orders::find($id);   
+        $orders = Orders::find($id);   
         $omiq = $orders->sifarish;   
-        $products = product::find($orders->product_id);       
+        $products = Product::find($orders->product_id);       
         $pmiq = $products->miqdar;
         $miq=$pmiq+$omiq;
         $products->miqdar=$miq;
@@ -192,7 +192,7 @@ class ordersController extends Controller
     public function search(Request $post){
         if($post->ajax()){
 
-        $list = orders::join('clients','clients.id','=','orders.client_id') 
+        $list = Orders::join('clients','clients.id','=','orders.client_id') 
         ->join('products','products.id','=','orders.product_id')
         ->join('brands','brands.id','=','products.brand_id')
         ->select('brands.brand','clients.client','clients.soyad','products.miqdar','products.mehsul','products.alish','products.satish','orders.created_at','orders.id','orders.sifarish','orders.tesdiq')

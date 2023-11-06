@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 
-class adminController extends Controller
+class AdminController extends Controller
 {
 
     public function insert(userRequest $post){

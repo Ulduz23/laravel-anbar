@@ -1,14 +1,11 @@
 <?php
 
 use App\Models\User;
-$yoxla = User::where('id','=',Auth::id())->where('blok','=',1)->count();
+$yoxla = User::where('id','=',Auth::id())->where('status','=',1)->count();
 
-if($yoxla > 0)
-{
-auth()->logout();
-return redirect()->route('daxilol')->with('error','Siz bloklandiniz');
-
-
+if($yoxla > 0){
+    auth()->logout();
+    return redirect()->route('daxilol')->with('error','Siz bloklandiniz');
 }
 
 ?>

@@ -19,7 +19,6 @@ class AdminController extends Controller
         if($post->password = $post->tpass)
         {       
             $con->foto = 'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg';
-            $con->blok = 0;
             $con->name = $post->name;
             $con->surname = $post->surname;
             $con->telefon = $post->telefon;
@@ -92,7 +91,6 @@ class AdminController extends Controller
         if($post->password = $post->tpass)
         {       
             $con->foto = 'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg';
-            $con->blok = 0;
             $con->name = $post->name;
             $con->surname = $post->surname;
             $con->telefon = $post->telefon;
@@ -110,8 +108,8 @@ class AdminController extends Controller
     public function blok($id)
     {
         $admin = User::find($id);
-        $blok= $admin->blok;
-        $admin->blok = 1;
+        $status= $admin->status;
+        $admin->status = 0;
 
         $admin->save();
 
@@ -122,8 +120,8 @@ class AdminController extends Controller
     public function noblok($id)
     {
         $admin = User::find($id);
-        $blok= $admin->blok;
-        $admin->blok = 0;
+        $status= $admin->status;
+        $admin->status = 1;
 
         $admin->save();
         

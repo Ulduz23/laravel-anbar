@@ -12,7 +12,7 @@ use App\Mail\EmailVerificationMail;
 use App\Mail\SendMail;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Termwind\Components\Dd;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -39,7 +39,6 @@ class UserController extends Controller
         $con->email = $post->email;
         $con->password = Hash::make($post->password);
         $con->email_verification_code = Str::random(40);
-        $con->save();
 
         $data=[];
         $data['email_name']='Anbar.az';
@@ -47,8 +46,11 @@ class UserController extends Controller
         $data['text']='Emailniz tesdiqleyin';
         $data['link']=env('APP_URL').'/user-verification/'.$con->email_verification_code;
         Mail::to($con->email)->send(new SendMail($data));
+        
+        $con->save();
 
-        return redirect()->route('hesabla')->with('success','Qeydiyyat tammalandi zenhmet olmasa emailinizi yoxlayin!');
+
+        return redirect()->route('daxilol')->with('success','Qeydiyyat tammalandi zenhmet olmasa emailinizi yoxlayin!');
     // }
     // return back()->with('warning','Bu istifadeci artiq movcuddur!');
 
@@ -56,15 +58,28 @@ class UserController extends Controller
 
     public function user_verification(Request $request){
         $verification = $request->verification;
-        $user_verification = User::where('email_verification_code',$verification)->first();
-        if($user_verification){
-            $user_verification->status=1;
-            $user_verification->email_verification_code="";
-            $user_verification->save();
-            return view('success_verification');
-            
+
+        try {
+            DB::beginTransaction();
+
+            $user_verification = User::where('email_verification_code', $verification)->first();
+
+            if ($user_verification && $user_verification->status == NULL) {
+                
+                $user_verification->email_verification_code = "";
+                $user_verification->status = 1;
+
+                $user_verification->save();
+
+                DB::commit();
+                return redirect()->route('daxilol')->with('success', 'Emailiniz təsdiqləndi, daxil olun!');
+
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
         }
-        return redirect()->route('login');
     }
 
     public function login(Request $post){
@@ -81,14 +96,14 @@ class UserController extends Controller
             return back()->with('error','Bele bir email bazada yoxdur!');
         }
 
-        if(!Auth::attempt(['email'=>$post->email,'password'=>$post->password,'blok'=>0]))
+        if(!Auth::attempt(['email'=>$post->email,'password'=>$post->password]))
         {return back()->with('error','Daxil etdiyiniz login ve ya parol yanlishdir');}
 
     return redirect()->route('hesabla');
     }
 
     public function logout(){
-        auth()->logout();
+        Auth::logout();
         return redirect()->route('daxilol');
     }
 

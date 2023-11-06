@@ -18,7 +18,6 @@ class BrandController extends Controller
     public function insert(brequest $post)
     {
         $con = new Brands();
-
         
         $yoxla = Brands::where('brand','=', $post->brand)->count();
 
@@ -38,7 +37,7 @@ class BrandController extends Controller
 
                 $con -> save();
 
-                return redirect()->route('select')->with('success','Brend ugurla daxil edildi!');
+                return redirect()->route('select')->with('success','Brend uğurla daxil edildi!');
 
         }
         return redirect()->route('select')->with('warning','Bu brend artıq mövcuddur!');
@@ -48,36 +47,24 @@ class BrandController extends Controller
      
     public function select()
     {
-        $data = Brands::get()->where('user_id','=',Auth::id());
+        $data = Brands::where('user_id','=',Auth::id())->get();
 
-        return view('brands',[
-            'list'=>$data
-
-        ]);      
+        return view('brands',get_defined_vars());      
       }
 
     public function sil($id)
-    {
-        
-       $sildata = Brands::find($id); //where('id', '=' , $id)
-       
-       
-        $data = Brands::get()        
-        ->where('user_id','=',Auth::id());
+    { 
+        $sildata = Brands::find($id); 
+        $data = Brands::where('user_id','=',Auth::id())->get();
 
-        return view('brands',[
-            'list'=>$data,
-            'sildata'=>$sildata
-
-
-        ]);      
+        return view('brands',get_defined_vars());      
     }
 
     
     public function delete($id)
     {
         
-       $sil = Brands::find($id)->delete(); //where('id', '=' , $id)
+       $sil = Brands::find($id)->delete(); 
        
        return redirect()->route('select')->with('success','Brend silindi');
        
@@ -86,18 +73,12 @@ class BrandController extends Controller
     public function edit($id)
     {
         
-       $editdata = Brands::find($id); //where('id', '=' , $id)
+       $editdata = Brands::find($id); 
        
-       $data = Brands::get()        
-        ->where('user_id','=',Auth::id());
+       $data = Brands::where('user_id','=',Auth::id())->get();
 
 
-        return view('brands',[
-            'list'=>$data,
-            'editdata'=>$editdata
-
-
-        ]);       
+        return view('brands',get_defined_vars());       
     }
 
 
@@ -107,18 +88,14 @@ class BrandController extends Controller
         $con = Brands::find($post->id);
 
         if($post->file('foto')){
-        
-        $file = time().'.'.$post->foto->extension();
-
-        $post->foto->storeAs('public/uploads/fotolar/',$file);
-
-        $con->foto = 'storage/uploads/fotolar/'.$file;
+            $file = time().'.'.$post->foto->extension();
+            $post->foto->storeAs('public/uploads/fotolar/',$file);
+            $con->foto = 'storage/uploads/fotolar/'.$file;
         }
         else
         {$con->foto = $con->foto;}
     
         $con->brand = $post->brand;
-
         $con->user_id = Auth::id();
 
 
@@ -127,7 +104,7 @@ class BrandController extends Controller
         
     }
 
-public function search(Request $post){
+    public function search(Request $post){
         if($post->ajax()){
 
         $list = Brands::where('brand','LIKE','%'.$post->search.'%')->get();
@@ -145,11 +122,11 @@ public function search(Request $post){
             </tr>';
         }
         
-      return Response($output);
+        return Response($output);
 
         }
-   
-  
-}
+    
+    
+    }
    
 }

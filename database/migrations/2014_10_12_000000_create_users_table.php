@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('telefon')->nullable();
             $table->string('email')->unique();
             $table->string('foto')->nullable();
-            $table->string('blok')->default(false);
-            $table->boolean('status')->default(true);
+            // $table->string('blok')->default(false);
+            $table->boolean('status')->default(false);
             $table->string('email_verification_code');
             $table->string('password')->nullable();
             $table->rememberToken();

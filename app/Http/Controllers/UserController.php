@@ -47,7 +47,6 @@ class UserController extends Controller
         $data['text']='Emailniz tesdiqleyin';
         $data['link']=env('APP_URL').'/user-verification/'.$con->email_verification_code;
         Mail::to($con->email)->send(new SendMail($data));
-        Auth::attempt(['email'=>$con->email,'password'=>$con->password]);
 
         return redirect()->route('hesabla')->with('success','Qeydiyyat tammalandi zenhmet olmasa emailinizi yoxlayin!');
     // }

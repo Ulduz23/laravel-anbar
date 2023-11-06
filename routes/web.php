@@ -124,8 +124,6 @@ Route::get('/login', function(){
 //----------------------------REGISTER--------------------------------------------//
 
 Route::post('/qeydiyyat',[UserController::class,'register'])->name('register');
-
-Route::get('/test',[UserController::class,'test'])->name('test');
 Route::get('/user-verification/{verification}',[UserController::class,'user_verification'])->name('user_verification');
 
 

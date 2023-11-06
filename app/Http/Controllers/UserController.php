@@ -32,7 +32,6 @@ class UserController extends Controller
     // if($yoxla==0)
     // {
         $con->foto = 'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg';
-        $con->blok = 0;
         $con->name = $post->name;
         $con->surname = $post->surname;
         $con->telefon = $post->telefon;
@@ -41,13 +40,14 @@ class UserController extends Controller
         $con->password = Hash::make($post->password);
         $con->email_verification_code = Str::random(40);
         $con->save();
+
         $data=[];
         $data['email_name']='Anbar.az';
         $data['subject']='Email verification';
         $data['text']='Emailniz tesdiqleyin';
         $data['link']=env('APP_URL').'/user-verification/'.$con->email_verification_code;
         Mail::to($con->email)->send(new SendMail($data));
-        Auth::attempt(['email'=>$con->email,'password'=>$con->password,'blok'=>0]);
+        Auth::attempt(['email'=>$con->email,'password'=>$con->password]);
 
         return redirect()->route('hesabla')->with('success','Qeydiyyat tammalandi zenhmet olmasa emailinizi yoxlayin!');
     // }
@@ -114,13 +114,5 @@ class UserController extends Controller
         }
     }
 
-    public function test(Request $request){
-        $data=[];
-        $data['email_name']='Anbar.az';
-        $data['subject']='Email verification';
-        $data['text']='Emailniz tesdiqleyin';
-        Mail::to('qlyvaulduz@gmail.com')->send(new SendMail($data));
-        
-        dd(1234);
-    }
+    
 }

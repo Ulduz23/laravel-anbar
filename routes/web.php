@@ -114,24 +114,25 @@ Route::group(['middleware'=>'notlogin'],function(){
 
     //------------------------------------------LOGIN--------------------------------------//
 
-Route::post('/login',[UserController::class,'login'])->name('login');
+    Route::post('/login',[UserController::class,'login'])->name('login');
 
-Route::get('/login', function(){
-    return view('login');
-})->name('daxilol');
-
-
-//----------------------------REGISTER--------------------------------------------//
-
-Route::post('/qeydiyyat',[UserController::class,'register'])->name('register');
-Route::get('/user-verification/{verification}',[UserController::class,'user_verification'])->name('user_verification');
+    Route::get('/login', function(){
+        return view('login');
+    })->name('daxilol');
 
 
+    //----------------------------REGISTER--------------------------------------------//
 
-Route::get('/qeydiyyat', function(){
-    return view('register');
-})->name('qeydiyyat');
+    Route::post('/qeydiyyat',[UserController::class,'register'])->name('register');
+    Route::get('/user-verification/{verification}',[UserController::class,'user_verification'])->name('user_verification');
 
 
 
+    Route::get('/qeydiyyat', function(){
+        return view('register');
+    })->name('qeydiyyat');
+
+    
+    Route::get('/login/{social}',[UserController::class,'socialLogin'])->where('social','google');
+    Route::get('/login/{social}/callback',[UserController::class,'handleProviderCallback'])->where('social','google');
 });

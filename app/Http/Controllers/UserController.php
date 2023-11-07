@@ -13,10 +13,41 @@ use App\Mail\SendMail;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class UserController extends Controller
 {
+    public function socialLogin($social){
+        return Socialite::driver($social)->redirect();
+    }
+
+    public function handleProviderCallback($social){
+        $userSocial = Socialite::driver($social)->user();
+        $user = User::where(['email' => $userSocial->getEmail()])->first();
+        if ($user) {
+            Auth::login($user);
+            return redirect()->route('hesabla');
+        } else {
+            $newUser = new User();
+            $newUser->name = $userSocial->name;
+            $newUser->surname = $userSocial->family_name ?? null;
+            $newUser->email = $userSocial->getEmail();
+            $newUser->foto = $userSocial->getAvatar() ?? null;
+
+            $newUser->email_verification_code = '';
+            $newUser->status = 1;
+
+            $newUser->save();
+            
+            Auth::login($newUser);
+            
+            return redirect()->route('hesabla');
+        }
+    }
     
+
+
     public function register(userRequest $post){
 
     $con = new User();

@@ -40,7 +40,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @csrf
     Şəkil:<br>
     <div>
-        <img src="{{url(Auth::user()->foto)}}" style="weight:70px; height:60px"><br>
+        <img src="{{url(Auth::user()->foto ?? '')}}" style="weight:70px; height:60px"><br>
         <input type="file" class="form-control" name="foto"><br>
     </div>
     Ad:<br>
@@ -49,11 +49,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     </div>
     Soyad:<br>
     <div>
-        <input type="text" class="form-control" name="surname" value="{{Auth::user()->surname}}"><br>
+        <input type="text" class="form-control" name="surname" value="{{Auth::user()->surname ?? ''}}"><br>
     </div>
     Telefon:<br>
     <div>
-        <input type="text" class="form-control" name="telefon" value="{{Auth::user()->telefon}}"><br>
+        <input type="text" class="form-control" name="telefon" value="{{Auth::user()->telefon ?? ''}}"><br>
     </div>
     Email:<br>
     <div>

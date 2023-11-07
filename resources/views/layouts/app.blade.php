@@ -107,10 +107,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="true">
-                                <img src="{{url(Auth::user()->foto)}}" alt="user" class="rounded-circle"
+                                <img src="{{url(Auth::user()->foto ?? '')}}" alt="user" class="rounded-circle"
                                     width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span>SALAM,</span> <span
-                                        class="text-dark"></span>{{(Auth::user()->name)}} {{(Auth::user()->surname)}} <i data-feather="chevron-down"
+                                        class="text-dark"></span>{{(Auth::user()->name)}} {{(Auth::user()->surname ?? '')}} <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">

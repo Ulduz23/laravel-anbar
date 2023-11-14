@@ -19,11 +19,11 @@ use Laravel\Socialite\Facades\Socialite;
 class UserController extends Controller
 {
     public function socialLogin($social){
-        return Socialite::driver($social)->redirect();
+        return Socialite::driver($social)->stateless()->redirect();
     }
 
     public function handleProviderCallback($social){
-        $userSocial = Socialite::driver($social)->user();
+        $userSocial = Socialite::driver($social)->stateless()->user();
         $user = User::where(['email' => $userSocial->getEmail()])->first();
         if ($user) {
             Auth::login($user);
